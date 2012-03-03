@@ -21,6 +21,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 /**
  * @ORM\Entity(repositoryClass="WindowsAzure\TaskDemoBundle\Repository\EntityRepository")
  * @UniqueEntity(fields={"username"})
+ * @ORM\Table(name="users")
  */
 class User implements UserInterface
 {

@@ -18,6 +18,7 @@ use WindowsAzure\TaskDemoBundle\Model\BaseObject;
 
 /**
  * @ORM\Entity(repositoryClass="WindowsAzure\TaskDemoBundle\Repository\TaskRepository")
+ * @ORM\Table(name="tasks")
  */
 class Task
 {
