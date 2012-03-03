@@ -4,6 +4,8 @@ This bundle demonstrates functionality of Windows Azure in combination with Symf
 
 This works in combination with [Azure Distribution Bundle](https://github.com/beberlei/AzureDistributionBundle).
 
+    Notice: This bundle is still in development. Functionality to demonstrate Windows Azure features will be added incrementally.
+
 ## Installing the Task Demo Bundle
 
 1. Downlad from https://github.com/beberlei/AzureTaskDemoBundle
@@ -17,6 +19,7 @@ An example of the `azure_parameters.yml` looks like:
     # this file. These will overwrite parameters from parameters.yml
     parameters:
         session_type: pdo
+        database_driver: pdo_sqlsrv
         database_host: tcp:DBID.database.windows.net
         database_user: USER@DBID
         database_password: PWD
@@ -32,5 +35,13 @@ with the following line:
 
     - { resource: ../../src/WindowsAzure/TaskDemoBundle/Resources/config/security.yml }
 
-6. Import the contents of the "schema.sql" from src\WindowsAzure\TaskDemoBundle\Resources\schema.sql into your SQL Azure database.
+6. Register routes in app\config\routing.yml
+
+        WindowsAzureTaskDemoBundle:
+            resource: "@WindowsAzureTaskDemoBundle/Controller/"
+            type:     annotation
+            prefix:   /
+
+
+7. Import the contents of the "schema.sql" from src\WindowsAzure\TaskDemoBundle\Resources\schema.sql into your SQL Azure database.
 
