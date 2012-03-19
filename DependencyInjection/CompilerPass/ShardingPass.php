@@ -44,7 +44,7 @@ class ShardingPass implements CompilerPassInterface
         );
         $def->setArguments($args);
 
-        $def = new Definition('Doctrine\Shards\DBAL\SQLAzure\SQLAureShardManager');
+        $def = new Definition('Doctrine\Shards\DBAL\SQLAzure\SQLAzureShardManager');
         $def->addArgument(new Reference('doctrine.dbal.default_connection'));
 
         $container->setDefinition('windows_azure_task_demo.shard_manager', $def);
