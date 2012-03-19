@@ -45,6 +45,9 @@ with the following line:
 
 7. Import the contents of the "schema.sql" from src\WindowsAzure\TaskDemoBundle\Resources\schema.sql into your SQL Azure database.
 
+8. Install the Doctrine sharding extension from https://github.com/doctrine/shards into "vendor/doctrine-shards".
+   Add `'Doctrine\Shards' => 'vendor/doctrine-shards/lib'` to the `app\autoload.php`
+
 ## Features
 
 ### Sharding with SQL Azure
