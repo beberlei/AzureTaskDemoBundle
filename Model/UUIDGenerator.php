@@ -15,6 +15,9 @@ namespace WindowsAzure\TaskDemoBundle\Model;
 
 use Doctrine\DBAL\Connection;
 
+/**
+ * UUID Generator abstraction layer.
+ */
 class UUIDGenerator implements IdGenerator
 {
     private $conn;
@@ -26,9 +29,7 @@ class UUIDGenerator implements IdGenerator
 
     public function generateId($object)
     {
-        if ($this->conn->getDatabasePlatform()->getName() == 'mysql') {
-            return $this->conn->fetchColumn('SELECT UUID()');
-        }
-        return $this->conn->fetchColumn('SELECT NEWID()');
+        $platform = $this->conn->getDatabasePlatform();
+        return $this->conn->fetchColumn('SELECT ' . $platform->getGuidExpression());
     }
 }

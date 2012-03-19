@@ -12,6 +12,7 @@
 {% for task in tasks %}
         <tr>
             <td>{{ task.subject }}</td>
+            <td>{% if task.type %}{{ task.type.label }}{% else %}-/-{% endif %}</td>
             <td>{% if task.dueDate %}{{ task.dueDate|date('m/d/y') }}{% else %}-{% endif %}</td>
             <td><form method="post" action="{{ path('task_delete', {'id': task.id}) }}"><input type="hidden" name="_method" value="DELETE" /><input type="submit" value="Delete" /></form></td>
 {% endfor %}

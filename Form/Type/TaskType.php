@@ -10,6 +10,10 @@ class TaskType extends AbstractType
     {
         $builder
             ->add('subject', 'text')
+            ->add('type', 'entity', array(
+                'class' => 'WindowsAzure\TaskDemoBundle\Entity\TaskType',
+                'property' => 'label'
+            ))
             ->add('dueDate', 'datetime')
         ;
     }

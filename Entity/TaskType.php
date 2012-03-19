@@ -23,7 +23,7 @@ use WindowsAzure\TaskDemoBundle\Model\BaseObject;
 class TaskType
 {
     /**
-     * @ORM\Id @ORM\GeneratedValue @ORM\Column(type="integer")
+     * @ORM\Id @ORM\Column(type="string")
      */
     protected $id;
 
@@ -31,5 +31,15 @@ class TaskType
      * @ORM\Column(type="string")
      */
     protected $label;
+
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    public function getLabel()
+    {
+        return $this->label;
+    }
 }
 

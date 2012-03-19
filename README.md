@@ -10,7 +10,7 @@ This works in combination with [Azure Distribution Bundle](https://github.com/be
 
 1. Downlad from https://github.com/beberlei/AzureTaskDemoBundle
 2. Unzip files into src\WindowsAzure\TaskDemoBundle
-3. Add 'new WindowsAzure\TaskDemoBundle\WindowsAzureTaskDemoBundle()' into the `$bundles` array. 
+3. Add `new WindowsAzure\TaskDemoBundle\WindowsAzureTaskDemoBundle()` into the `$bundles` array.
 4. Configure the database by modifying `app\config\azure_parameters.yml`.
 
 An example of the `azure_parameters.yml` looks like:
@@ -31,7 +31,7 @@ Open `app\config\security.yml` and exchange the line:
 
     - { resource: security.yml }
 
-with the following line: 
+with the following line:
 
     - { resource: ../../src/WindowsAzure/TaskDemoBundle/Resources/config/security.yml }
 
@@ -44,4 +44,18 @@ with the following line:
 
 
 7. Import the contents of the "schema.sql" from src\WindowsAzure\TaskDemoBundle\Resources\schema.sql into your SQL Azure database.
+
+## Features
+
+### Sharding with SQL Azure
+
+This demo uses SQL Azure Federations to show the sharding functionality. The data model looks like follows:
+
+1. User Table (Root Database)
+2. Task Table (Federated Table)
+3. TaskType Table (Federation Table, but not federated)
+
+The federation is federated on the `user_id` as distribution key. A request listener will decide which federation to use by looking at the session user object. As long as the user is not logged in, no federation will be picked.
+
+The federations require one slight change to a perfectly normalized database schema. Instead of having a task-id on the tasks table there is a composite primary key on "taskid"+"userid".
 

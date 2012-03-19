@@ -15,5 +15,10 @@
         <service id="windows_azure_task_demo.model.id_generator" class="WindowsAzure\TaskDemoBundle\Model\UUIDGenerator">
             <argument type="service" id="doctrine.dbal.default_connection" />
         </service>
+
+        <service id="windows_azure_task_demo.model.user_federation_listener" class="WindowsAzure\TaskDemoBundle\Model\UserFederationListener">
+            <argument type="service" id="security.context" />
+            <argument type="service" id="windows_azure_task_demo.shard_manager" on-invalid="null"/>
+        </service>
     </services>
 </container>
