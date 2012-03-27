@@ -1,7 +1,8 @@
 USE FEDERATION ROOT WITH RESET
 GO
 
-DROP TABLE users;
+IF OBJECT_ID('users') IS NOT NULL
+    DROP TABLE users;
 
 CREATE TABLE users (
     id UNIQUEIDENTIFIER NOT NULL,
@@ -13,7 +14,8 @@ CREATE TABLE users (
 );
 GO
 
-DROP FEDERATION User_Federation;
+IF OBJECT_ID('User_Federation') IS NOT NULL
+    DROP FEDERATION User_Federation;
 GO
 
 CREATE FEDERATION User_Federation(user_id UNIQUEIDENTIFIER RANGE)
@@ -22,8 +24,10 @@ GO
 USE FEDERATION User_Federation(user_id='00000000-0000-0000-0000-000000000000') WITH RESET, FILTERING=OFF
 GO
 
-DROP TABLE tasks;
-DROP TABLE task_types;
+IF OBJECT_ID('tasks') IS NOT NULL
+    DROP TABLE tasks;
+IF OBJECT_ID('task_types') IS NOT NULL
+    DROP TABLE task_types;
 
 CREATE TABLE task_types (
     id UNIQUEIDENTIFIER NOT NULL,
@@ -31,9 +35,9 @@ CREATE TABLE task_types (
     PRIMARY KEY(id)
 );
 
-INSERT INTO task_types (NEWID(), 'Work')
-INSERT INTO task_types (NEWID(), 'Home')
-INSERT INTO task_types (NEWID(), 'Other')
+INSERT INTO task_types (id, label) VALUES (NEWID(), 'Work');
+INSERT INTO task_types (id, label) VALUES (NEWID(), 'Home');
+INSERT INTO task_types (id, label) VALUES (NEWID(), 'Other');
 
 CREATE TABLE tasks (
     id UNIQUEIDENTIFIER NOT NULL,
