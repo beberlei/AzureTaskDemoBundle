@@ -15,6 +15,7 @@ namespace WindowsAzure\TaskDemoBundle\Model;
 
 use Symfony\Component\Security\Core\SecurityContextInterface;
 use Doctrine\Shards\DBAL\ShardManager;
+use WindowsAzure\TaskDemoBundle\Entity\User;
 
 /**
  * Runs after security, picks the user from the session and then changes the
@@ -63,6 +64,11 @@ class UserFederationListener
         }
 
         $user = $token->getUser();
+
+        if ( ! ($user instanceof User)) {
+            return;
+        }
+
         $this->shardManager->selectShard($user->getId());
     }
 }
