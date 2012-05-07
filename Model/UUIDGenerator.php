@@ -30,6 +30,9 @@ class UUIDGenerator implements IdGenerator
     public function generateId($object)
     {
         $platform = $this->conn->getDatabasePlatform();
+        if ($platform->getName() == 'mssql') {
+            return $this->conn->fetchColumn('SELECT NEWID()');
+        }
         return $this->conn->fetchColumn('SELECT ' . $platform->getGuidExpression());
     }
 }
