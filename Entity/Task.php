@@ -58,12 +58,14 @@ class Task
     {
         $this->id = $id;
         $this->user = $user;
+        $this->dueDate = new \DateTime("now");
     }
+
     public function getId()
     {
         return $this->id;
     }
-    
+
     /**
      * Get user.
      *
@@ -73,7 +75,7 @@ class Task
     {
         return $this->user;
     }
-    
+
     /**
      * Get subject.
      *
@@ -83,7 +85,7 @@ class Task
     {
         return $this->subject;
     }
-    
+
     /**
      * Set subject.
      *
@@ -93,7 +95,7 @@ class Task
     {
         $this->subject = $subject;
     }
-    
+
     /**
      * Get type.
      *
@@ -103,7 +105,7 @@ class Task
     {
         return $this->type;
     }
-    
+
     /**
      * Set type.
      *
@@ -113,7 +115,7 @@ class Task
     {
         $this->type = $type;
     }
-    
+
     /**
      * Get dueDate.
      *
@@ -123,7 +125,7 @@ class Task
     {
         return $this->dueDate;
     }
-    
+
     /**
      * Set dueDate.
      *

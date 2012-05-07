@@ -1,5 +1,11 @@
+{% extends "WindowsAzureTaskDemoBundle::layout.html.twig" %}
+
+{% block content %}
 <h1>Windows Azure TaskDemoBundle for Symfony2</h1>
 
 <p><a href="{{ path('hello') }}">Testing sessions</a></p>
 
 <p><a href="{{ path('task_list') }}">Go to Task application</a></p>
+
+<p><a href="{{ path('azure_table') }}">Azure Table Test</a></p>
+{% endblock %}

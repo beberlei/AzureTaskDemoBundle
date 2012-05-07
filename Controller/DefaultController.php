@@ -16,6 +16,7 @@ namespace WindowsAzure\TaskDemoBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use WindowsAzure\TaskDemoBundle\Entity\Message;
 
 class DefaultController extends Controller
 {
@@ -44,6 +45,21 @@ class DefaultController extends Controller
         }
 
         return array('names' => $names, 'name' => $name);
+    }
+
+    /**
+     * @Route("/table", name="azure_table")
+     * @Template()
+     */
+    public function tableAction()
+    {
+        $entity = new Message("user", "test");
+
+        $manager = $this->container->get('windows_azure_distribution.table.manager');
+        $manager->persist($entity);
+        $manager->flush();
+
+        return array('entity' => $entity);
     }
 }
 

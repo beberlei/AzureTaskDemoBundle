@@ -38,7 +38,7 @@ class UserFederationListener
      */
     private $shardManager;
 
-    public function __construct(SecurityContextInterface $security, ShardManager $shardManager)
+    public function __construct(SecurityContextInterface $security, ShardManager $shardManager = null)
     {
         $this->security = $security;
         $this->shardManager = $shardManager;
