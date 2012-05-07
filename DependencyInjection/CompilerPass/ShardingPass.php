@@ -38,8 +38,9 @@ class ShardingPass implements CompilerPassInterface
         }
 
         $args[0]['sharding'] = array(
-            'federationName' => 'User_Federation',
-            'distributionKey' => 'user_id',
+            'federationName'   => 'User_Federation',
+            'distributionKey'  => 'user_id',
+            'distributionType' => 'guid',
             'filteringEnabled' => false
         );
         $def->setArguments($args);
