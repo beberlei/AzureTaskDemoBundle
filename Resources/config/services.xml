@@ -18,7 +18,7 @@
 
         <service id="windows_azure_task_demo.model.user_federation_listener" class="WindowsAzure\TaskDemoBundle\Model\UserFederationListener">
             <argument type="service" id="security.context" />
-            <argument type="service" id="windows_distribution_bundle.default_shard_manager" on-invalid="null"/>
+            <argument type="service" id="windows_azure_distribution.default_shard_manager" on-invalid="null"/>
             <tag name="kernel.event_listener" event="kernel.request" method="onKernelRequest" />
         </service>
     </services>
