@@ -1,7 +1,7 @@
 <?php
 namespace WindowsAzure\TaskDemoBundle\Entity;
 
-use Doctrine\KeyValueStore\Mapping\Annotations as KeyValue;
+use Doctrine\KeyValueStore\Mapping\Annotations as KeyValueStore;
 
 /**
  * @KeyValueStore\Entity(storageName="messages")
