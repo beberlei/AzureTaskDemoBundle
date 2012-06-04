@@ -1,7 +1,7 @@
 {% extends "WindowsAzureTaskDemoBundle::layout.html.twig" %}
 
 {% block content %}
-    <div class="span8">
+    <div class="span7">
         <p>There are <strong>{{ tasks|length }}</strong> tasks due.</p>
 
         <table class="table">
@@ -21,7 +21,13 @@
         </table>
     </div>
 
-    <div class="span4">
-        <h2>Events</h2>
+    <div class="span5">
+        <h2>Events ({{ events|length }})</h2>
+
+        <ul>
+        {% for event in events %}
+            <li>{{ event.message }} on {{ event.eventDate }}</li>
+        {% endfor %}
+        </ul>
     </div>
 {% endblock %}
