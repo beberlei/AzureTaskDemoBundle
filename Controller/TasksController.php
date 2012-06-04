@@ -20,6 +20,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 use WindowsAzure\TaskDemoBundle\Form\Type\TaskType;
 use WindowsAzure\TaskDemoBundle\Entity\Task;
+use WindowsAzure\TaskDemoBundle\Entity\TaskEvent;
 
 class TasksController extends Controller
 {
@@ -30,10 +31,16 @@ class TasksController extends Controller
      */
     public function getTasksAction()
     {
+        $user = $this->container->get('security.context')->getToken()->getUser();
         $repository = $this->container->get('windows_azure_taskdemo.repository.task');
-        $tasks = $repository->findByDueDate($this->container->get('security.context')->getToken()->getUser());
+        $tasks      = $repository->findByDueDate($user);
 
-        return array('tasks' => $tasks);
+        $tblManager = $this->container->get('windows_azure_distribution.table.manager');
+        $rangeQuery = $tblManager->createRangeQuery('WindowsAzure\TaskDemoBundle\Entity\TaskEvent', $user->getId());
+        $rangeQuery->setLimit(20);
+        $events     = $rangeQuery->execute();
+
+        return array('tasks' => $tasks, 'events' => $events);
     }
 
     /**
@@ -56,8 +63,9 @@ class TasksController extends Controller
     public function postTaskAction()
     {
         $idGenerator = $this->container->get('windows_azure_task_demo.model.id_generator');
-        $task = new Task($idGenerator->generateId('task'), $this->container->get('security.context')->getToken()->getUser());
-        $form = $this->createForm(new TaskType(), $task);
+        $user        = $this->container->get('security.context')->getToken()->getUser();
+        $task        = new Task($idGenerator->generateId('task'), $user);
+        $form        = $this->createForm(new TaskType(), $task);
 
         $form->bindRequest($this->getRequest());
 
@@ -67,6 +75,12 @@ class TasksController extends Controller
 
             $em = $this->container->get('doctrine.orm.default_entity_manager');
             $em->flush();
+
+            $event = new TaskEvent($user, $task, TaskEvent::EVENT_CREATED, "Created Task '" . $task->getSubject() . "'");
+
+            $tblManager = $this->container->get('windows_azure_distribution.table.manager');
+            $tblManager->persist($event);
+            $tblManager->flush();
 
             return $this->redirect($this->generateUrl('task_list'));
         }
@@ -80,11 +94,18 @@ class TasksController extends Controller
      */
     public function deleteTaskAction(Task $task)
     {
+        $user       = $this->container->get('security.context')->getToken()->getUser();
         $repository = $this->container->get('windows_azure_taskdemo.repository.task');
         $repository->remove($task);
 
         $em = $this->container->get('doctrine.orm.default_entity_manager');
         $em->flush();
+
+        $event = new TaskEvent($user, $task, TaskEvent::EVENT_DELETED, "Deleted Task '" . $task->getSubject() . "'");
+
+        $tblManager = $this->container->get('windows_azure_distribution.table.manager');
+        $tblManager->persist($event);
+        $tblManager->flush();
 
         return $this->redirect($this->generateUrl('task_list'));
     }
