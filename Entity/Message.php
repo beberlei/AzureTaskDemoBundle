@@ -8,9 +8,9 @@ use Doctrine\KeyValueStore\Mapping\Annotations as KeyValueStore;
  */
 class Message
 {
-    /** @KeyValue\Id */
+    /** @KeyValueStore\Id */
     private $user;
-    /** @KeyValue\Id */
+    /** @KeyValueStore\Id */
     private $message;
 
     public function __construct($user, $message)
