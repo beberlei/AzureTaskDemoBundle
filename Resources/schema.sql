@@ -14,10 +14,6 @@ CREATE TABLE users (
 );
 GO
 
-IF OBJECT_ID('User_Federation') IS NOT NULL
-    DROP FEDERATION User_Federation;
-GO
-
 CREATE FEDERATION User_Federation(user_id UNIQUEIDENTIFIER RANGE)
 GO
 
