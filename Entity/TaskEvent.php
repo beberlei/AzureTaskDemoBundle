@@ -16,7 +16,7 @@ namespace WindowsAzure\TaskDemoBundle\Entity;
 use Doctrine\KeyValueStore\Mapping\Annotations as KeyValueStore;
 
 /**
- * @KeyValueStore\Entity(storageName="task_events")
+ * @KeyValueStore\Entity(storageName="taskevents")
  */
 class TaskEvent
 {
