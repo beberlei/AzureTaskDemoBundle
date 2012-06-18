@@ -35,10 +35,14 @@ class TasksController extends Controller
         $repository = $this->container->get('windows_azure_taskdemo.repository.task');
         $tasks      = $repository->findByDueDate($user);
 
-        $tblManager = $this->container->get('windows_azure_distribution.table.manager');
-        $rangeQuery = $tblManager->createRangeQuery('WindowsAzure\TaskDemoBundle\Entity\TaskEvent', $user->getId());
-        $rangeQuery->setLimit(20);
-        $events     = $rangeQuery->execute();
+        try {
+            $tblManager = $this->container->get('windows_azure_distribution.table.manager');
+            $rangeQuery = $tblManager->createRangeQuery('WindowsAzure\TaskDemoBundle\Entity\TaskEvent', $user->getId());
+            $rangeQuery->setLimit(20);
+            $events     = $rangeQuery->execute();
+        } catch(\Exception $e) {
+            $events     = array();
+        }
 
         return array('tasks' => $tasks, 'events' => $events);
     }
